@@ -719,66 +719,69 @@ export default function App() {
 
             {/* Current methodology steps */}
             <div className="space-y-4 mb-4">
-              {getCurrentMethodology().steps.map((step) => (
-                <Card
-                  key={`${selectedMethodology}-${step.number}`}
-                  className={`transition-all duration-200 ${step.color}`}
-                >
-                  <Collapsible
-                    open={openSteps[`${selectedMethodology}-${step.number}`]}
-                    onOpenChange={() =>
-                      toggleStep(`${selectedMethodology}-${step.number}`)
-                    }
+              {(() => {
+                const currentMethodology = getCurrentMethodology();
+                return currentMethodology.steps.map((step) => (
+                  <Card
+                    key={`${currentMethodology.id}-${step.number}`}
+                    className={`transition-all duration-200 ${step.color}`}
                   >
-                    <CollapsibleTrigger asChild>
-                      <CardHeader className="cursor-pointer hover:bg-accent/50 transition-colors">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground">
-                              {step.icon}
+                    <Collapsible
+                      open={openSteps[`${selectedMethodology}-${step.number}`]}
+                      onOpenChange={() =>
+                        toggleStep(`${selectedMethodology}-${step.number}`)
+                      }
+                    >
+                      <CollapsibleTrigger asChild>
+                        <CardHeader className="cursor-pointer hover:bg-accent/50 transition-colors">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground">
+                                {step.icon}
+                              </div>
+                              <div className="text-left">
+                                <CardTitle className="flex items-center gap-2">
+                                  #{step.number} – {step.title}
+                                </CardTitle>
+                                <CardDescription>
+                                  {step.description}
+                                </CardDescription>
+                              </div>
                             </div>
-                            <div className="text-left">
-                              <CardTitle className="flex items-center gap-2">
-                                #{step.number} – {step.title}
-                              </CardTitle>
-                              <CardDescription>
-                                {step.description}
-                              </CardDescription>
-                            </div>
+                            {openSteps[
+                              `${selectedMethodology}-${step.number}`
+                            ] ? (
+                              <ChevronDown className="w-5 h-5" />
+                            ) : (
+                              <ChevronRight className="w-5 h-5" />
+                            )}
                           </div>
-                          {openSteps[
-                            `${selectedMethodology}-${step.number}`
-                          ] ? (
-                            <ChevronDown className="w-5 h-5" />
-                          ) : (
-                            <ChevronRight className="w-5 h-5" />
-                          )}
-                        </div>
-                      </CardHeader>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <CardContent className="pt-0 pb-4">
-                        <p className="text-foreground leading-relaxed mb-4">
-                          {step.content}
-                        </p>
-                        <div className="bg-accent/50 p-3 rounded-lg">
-                          <h4 className="mb-2">Key Questions to Ask:</h4>
-                          <ul className="space-y-1">
-                            {step.prompts.map((prompt, index) => (
-                              <li
-                                key={index}
-                                className="text-sm text-muted-foreground"
-                              >
-                                • {prompt}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </CardContent>
-                    </CollapsibleContent>
-                  </Collapsible>
-                </Card>
-              ))}
+                        </CardHeader>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <CardContent className="pt-0 pb-4">
+                          <p className="text-foreground leading-relaxed mb-4">
+                            {step.content}
+                          </p>
+                          <div className="bg-accent/50 p-3 rounded-lg">
+                            <h4 className="mb-2">Key Questions to Ask:</h4>
+                            <ul className="space-y-1">
+                              {step.prompts.map((prompt, index) => (
+                                <li
+                                  key={index}
+                                  className="text-sm text-muted-foreground"
+                                >
+                                  • {prompt}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </CardContent>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </Card>
+                ));
+              })()}
             </div>
 
             {/* Start Session Button */}

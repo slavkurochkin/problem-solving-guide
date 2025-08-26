@@ -40,6 +40,18 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: List build directory contents
+        run: ls -la build/
+
+      - name: List assets directory contents
+        run: ls -la build/assets/ || echo "No assets directory found"
+
+      - name: Check HTML file for asset paths
+        run: |
+          echo "Checking index.html for asset paths..."
+          grep -o 'src="[^"]*"' build/index.html | head -5
+          grep -o 'href="[^"]*"' build/index.html | head -5
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

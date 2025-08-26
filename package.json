@@ -2,7 +2,7 @@
   "name": "problem-solving-guide",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://YOUR_USERNAME.github.io/problem-solving-guide",
+  "homepage": "https://slavkurochkin.github.io/problem-solving-guide",
   "engines": {
     "node": ">=20.0.0",
     "npm": ">=9.0.0"
@@ -64,6 +64,7 @@
     "dev:simple": "npx http-server . -p 3000 -o",
     "dev:serve": "npx http-server . -p 3000 -o",
     "build": "vite build",
+    "build:check": "npm run build && echo 'Build completed. Checking asset paths...' && grep -o 'src=\"[^\"]*\"' build/index.html | head -3",
     "build:simple": "npx tsc --noEmit && echo 'TypeScript check passed'",
     "preview": "vite preview",
     "predeploy": "npm run build",
